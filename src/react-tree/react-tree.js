@@ -17,6 +17,7 @@ export class ReactTree {
     add(element, props = {}, parentNode = this.rootNode) {
         let newNode = new TreeNode(element, this.nodeCount, props, parentNode);
         parentNode.children.push(newNode);
+        this.linkNode(parentNode, newNode);
         this.nodeCount++;
 
         return newNode;
@@ -29,7 +30,7 @@ export class ReactTree {
         while(this.nodesRendered < (this.nodeCount - 1)) {
             if (parentNode && parentNode.children) {
                 parentNode.children.forEach((child, i) => {
-                    this.renderNode(parentNode, child);
+                    this.linkNode(parentNode, child);
                 });
             }
 
@@ -71,7 +72,7 @@ export class ReactTree {
         while(this.nodesRendered < (this.nodeCount - 1)) {
             if (parentNode && parentNode.children) {
                 parentNode.children.forEach((child, i) => {
-                    this.renderNode(parentNode, child);
+                    this.linkNode(parentNode, child);
                 });
             }
 
@@ -91,7 +92,7 @@ export class ReactTree {
         return React.createElement(this.rootNode.element, this.rootNode.props);
     }
 
-    renderNode(parentNode, childNode) {
+    linkNode(parentNode, childNode) {
         parentNode.props.children.push(new ReactElement(childNode.element, childNode.props));
         this.nodesRendered++;
     }

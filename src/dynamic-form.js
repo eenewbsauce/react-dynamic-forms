@@ -76,8 +76,8 @@ class DynamicForm extends PureComponent {
 
     resolveElementMarkup(elem) {
         this.elem = elem;
-        // this.renderTree();
-        this.sampleRender();
+        this.renderTree();
+        // this.sampleRender();
     }
 
     renderTree() {

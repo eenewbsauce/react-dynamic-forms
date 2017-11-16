@@ -75,12 +75,14 @@ class DynamicForm extends PureComponent {
     }
 
     resolveElementMarkup(elem) {
-        let $markup;
-        let elemArray;
         this.elem = elem;
-        // this.digestConfig();
-        // ReactDOM.render(this.renderedTree, this.elem);
+        this.digestConfig();
+        ReactDOM.render(this.renderedTree, this.elem);
 
+        // this.sampleRender();
+    }
+
+    sampleRender() {
         this.tree = new ReactTree(this.getDiv(), { className: 'wrapper' });
         this.tree.add(this.dummyElement(), { name: 'wrapper:bert' });
         this.tree.add(this.dummyElement(), { name: 'wrapper:ryan' });
@@ -128,7 +130,7 @@ class DynamicForm extends PureComponent {
 
     getForm() {
         return function(props) {
-            <form key={Math.random()}name={props.name}>
+            return <form key={Math.random()}name={props.name}>
                 {props.children.map((i) => {
                     return React.createElement(i.element, {...i.props, key: i.props.id } );
                 })}
@@ -138,7 +140,7 @@ class DynamicForm extends PureComponent {
 
     getRadio() {
         return function Radio(props) {
-            <div class="radio">
+            return <div class="radio">
                 <label>
                     <input type="radio" value={props.value} />
                     {props.placeholder}

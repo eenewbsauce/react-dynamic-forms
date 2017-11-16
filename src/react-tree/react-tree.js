@@ -10,7 +10,6 @@ export class ReactTree {
         this.nodeCount = 0;
         this.rootNode = new TreeNode(element, this.nodeCount, props);
         this.nodeCount++;
-        this.tooManyRecursions = 100;
         this.recursions = 0;
         this.nodesRendered = 0;
     }

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 const R = require('ramda');
 
 export default class Node {
@@ -13,5 +14,9 @@ export default class Node {
         return R.differenceWith((left, right) => {
             return left.id === right.id;
         }, this.children, [node]).length > 0;
+    }
+
+    countChildren() {
+        return _.get(this, 'children.lenth', 0);
     }
 }

@@ -49,6 +49,48 @@ export class ReactTree {
         return React.createElement(this.rootNode.element, this.rootNode.props);
     }
 
+    findDeepestParent(startingNode = false, index = false) {
+        let node = startingNode
+            ? startingNode
+            : this.rootNode;
+
+        let numChildren = _.get(node, 'children.length', 0);
+        index = index ? index : numChildren - 1;
+
+        if(numChildren > 0) {
+            return this.findLastNode(node.children[index]).parentNode;
+        } else {
+            return node
+        }
+    }
+
+    renderSample(childNode = null, parentNode = null, isRecursive = false) {
+        parentNode = this.findDeepestParentSample(parentNode);
+        let iteration = 1;
+
+        while(this.nodesRendered < (this.nodeCount - 1)) {
+            if (parentNode && parentNode.children) {
+                parentNode.children.forEach((child, i) => {
+                    this.renderNode(parentNode, child);
+                });
+            }
+
+            if (parentNode && parentNode.parentNode) {
+                let numChildren = parentNode.parentNode.children.length - 1;
+                let newParent = this.findDeepestParent(parentNode.parentNode, numChildren - iteration);
+
+                if (newParent.id !== parentNode.id) {
+                    iteration++;
+                    parentNode = newParent;
+                } else {
+                    iteration = 1;
+                }
+            }
+        }
+
+        return React.createElement(this.rootNode.element, this.rootNode.props);
+    }
+
     renderNode(parentNode, childNode) {
         parentNode.props.children.push(new ReactElement(childNode.element, childNode.props));
         this.nodesRendered++;
@@ -66,7 +108,7 @@ export class ReactTree {
         }
     }
 
-    findDeepestParent(startingNode = false, index = false) {
+    findDeepestParentSample(startingNode = false, index = false) {
         let node = startingNode
             ? startingNode
             : this.rootNode;
@@ -79,9 +121,5 @@ export class ReactTree {
         } else {
             return node
         }
-    }
-
-    static digestConfig() {
-
     }
 }

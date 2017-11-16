@@ -76,10 +76,13 @@ class DynamicForm extends PureComponent {
 
     resolveElementMarkup(elem) {
         this.elem = elem;
+        // this.renderTree();
+        this.sampleRender();
+    }
+
+    renderTree() {
         this.digestConfig();
         ReactDOM.render(this.renderedTree, this.elem);
-
-        // this.sampleRender();
     }
 
     sampleRender() {
@@ -92,7 +95,7 @@ class DynamicForm extends PureComponent {
         let inner2 = this.tree.add(this.getInner(),  { className: 'inner2' });
         this.tree.add(this.dummyElement(), { name: 'inner2:mac' }, inner2);
         this.tree.add(this.dummyElement(), { name: 'inner2:sam' }, inner2);
-        let rendered = this.tree.render();
+        let rendered = this.tree.renderSample();
         ReactDOM.render(rendered, this.elem);
     }
 
@@ -171,8 +174,6 @@ class DynamicForm extends PureComponent {
     }
 
     render() {
-        let { formData } = this.props;
-
         return (
             <div>
                 <button onClick={(e) => this.forceUpdate()}>reload</button>
@@ -188,7 +189,7 @@ class DynamicForm extends PureComponent {
 }
 
 DynamicForm.propTypes = {
-    formData: PropTypes.object.isRequired
+    config: PropTypes.object.isRequired
 };
 
 export default DynamicForm;

@@ -130,7 +130,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Development Heaven</h1>
         </header>
 
-        <DynamicForm config={ this.config[0] } onClick={(e) => this.click} />
+        <DynamicForm config={ this.config[0] } onClick={(e) => this.click(e)} />
       </div>
     );
   }

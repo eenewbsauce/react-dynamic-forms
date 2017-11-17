@@ -5,6 +5,12 @@ import { ReactTree } from './react-tree';
 const R = require('ramda');
 
 class DynamicForm extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.getButton = this.getButton.bind(this);
+    }
+
     digestConfig(config = this.props.config, isRecursive = false, latestNode, nodeBeforeRecursion) {
         if (!isRecursive) {
             this.tree = new ReactTree(
@@ -132,8 +138,10 @@ class DynamicForm extends PureComponent {
     }
 
     getButton() {
+        let self = this;
+
         return function Button(props) {
-            return <button key={ props.id } className={ props.className } onClick={ props.onClick }>{ props.text }</button>
+            return <button key={ props.id } className={ props.className } onClick={ self.props.onClick }>{ props.text }</button>
         };
     }
 

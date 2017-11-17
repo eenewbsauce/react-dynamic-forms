@@ -46,7 +46,7 @@ class DynamicForm extends PureComponent {
         if (isRecursive) {
             return latestNode;
         } else {
-            this.renderedTree = this.tree.render();
+            this.renderedTree = React.createElement(this.tree.rootNode.element, this.tree.rootNode.props);
         }
     }
 

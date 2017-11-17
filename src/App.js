@@ -118,6 +118,11 @@ class App extends Component {
       ];
   }
 
+  click(e) {
+      e.stopPropagation();
+      alert('foo');
+  }
+
   render() {
     return (
       <div className="App">
@@ -125,7 +130,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Development Heaven</h1>
         </header>
 
-        <DynamicForm config={this.config[0]} />
+        <DynamicForm config={ this.config[0] } onClick={(e) => this.click} />
       </div>
     );
   }

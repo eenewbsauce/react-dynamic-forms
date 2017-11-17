@@ -5,11 +5,6 @@ import { ReactTree } from './react-tree';
 const R = require('ramda');
 
 class DynamicForm extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.tree = {};
-    }
-
     digestConfig(config = this.props.config, isRecursive = false, latestNode, nodeBeforeRecursion) {
         if (!isRecursive) {
             this.tree = new ReactTree(
@@ -51,75 +46,44 @@ class DynamicForm extends PureComponent {
     }
 
     createElement(elementType) {
+        let output;
+
         switch (elementType) {
-            case 'div':
-                return this.getDiv();
-                break;
             case 'form':
-                return this.getForm();
+                output = this.getForm();
                 break;
             case 'select':
-                return this.getSelect();
+                output = this.getSelect();
                 break;
             case 'p':
-                return this.getParagraph();
+                output = this.getParagraph();
                 break;
             case 'radio':
-                return this.getRadio();
+                output = this.getRadio();
                 break;
             case 'button':
-                return this.getButton();
+                output = this.getButton();
                 break;
-
+            case 'div':
+            default:
+                output = this.getDiv();
+                break;
         }
+
+        return output;
     }
 
     resolveElementMarkup(elem) {
         this.elem = elem;
-        this.renderTree();
-        // this.sampleRender();
-    }
-
-    renderTree() {
         this.digestConfig();
         ReactDOM.render(this.renderedTree, this.elem);
     }
 
-    sampleRender() {
-        this.tree = new ReactTree(this.getDiv(), { className: 'wrapper' });
-        this.tree.add(this.dummyElement(), { name: 'wrapper:bert' });
-        this.tree.add(this.dummyElement(), { name: 'wrapper:ryan' });
-        let inner = this.tree.add(this.getInner(),  { className: 'inner1' });
-        this.tree.add(this.dummyElement(), { name: 'inner1:ryan' }, inner);
-        this.tree.add(this.dummyElement(), { name: 'inner1:tom' }, inner);
-        let inner2 = this.tree.add(this.getInner(),  { className: 'inner2' });
-        this.tree.add(this.dummyElement(), { name: 'inner2:mac' }, inner2);
-        this.tree.add(this.dummyElement(), { name: 'inner2:sam' }, inner2);
-        let rendered = this.tree.renderSample();
-        ReactDOM.render(rendered, this.elem);
-    }
-
-    dummyElement() {
-        return function Dummy(props) {
-            return <p>Hello {props.name}</p>;
-        }
-    }
-
-    getInner() {
-        return function Inner(props) {
-            return <div className={ props.className }>
-                {props.children.map((i) => {
-                    return React.createElement(i.element, {...i.props, key: i.props.id } );
-                })}
-            </div>;
-        };
-    }
-
     getDiv() {
         return function Div(props) {
-            return <div key={Math.random()} className={ props.className }>
+            return <div key={ props.id } className={ props.className }>
                 {props.children.map((i) => {
-                    return React.createElement(i.element, {...i.props, key: i.props.id } );
+                    return React.createElement(i.element, { ...i.props, key: i.props.id } );
                 })}
             </div>;
         };
@@ -127,15 +91,15 @@ class DynamicForm extends PureComponent {
 
     getParagraph() {
         return function Paragraph(props) {
-            return <p>{props.text}</p>;
+            return <p key={ props.id }>{ props.text }</p>;
         }
     }
 
     getForm() {
         return function(props) {
-            return <form key={Math.random()}name={props.name}>
+            return <form key={ props.id } name={props.name}>
                 {props.children.map((i) => {
-                    return React.createElement(i.element, {...i.props, key: i.props.id } );
+                    return React.createElement(i.element, { ...i.props, key: i.props.id } );
                 })}
             </form>
         };
@@ -145,8 +109,8 @@ class DynamicForm extends PureComponent {
         return function Radio(props) {
             return <div class="radio">
                 <label>
-                    <input type="radio" value={props.value} />
-                    {props.placeholder}
+                    <input type="radio" value={ props.value } />
+                    { props.placeholder }
                 </label>
             </div>
         }
@@ -155,11 +119,11 @@ class DynamicForm extends PureComponent {
     getSelect() {
         return function Select(props) {
             return (
-                <select className={props.className}>
-                    <option key={Math.random()}value="">{props.placeholder}</option>
+                <select key={ props.id } className={ props.className }>
+                    <option key={ 0 } value="">{ props.placeholder }</option>
                     {
                         props.options.map((option) => {
-                            return <option key={option} value={option}>{option}</option>
+                            return <option key={ option+1 } value={ option }>{ option }</option>
                         })
                     }
                 </select>
@@ -169,7 +133,7 @@ class DynamicForm extends PureComponent {
 
     getButton() {
         return function Button(props) {
-            return <button key={Math.random()} className={props.className} onClick={props.onClick}>{props.text}</button>
+            return <button key={ props.id } className={ props.className } onClick={ props.onClick }>{ props.text }</button>
         };
     }
 
@@ -189,7 +153,8 @@ class DynamicForm extends PureComponent {
 }
 
 DynamicForm.propTypes = {
-    config: PropTypes.object.isRequired
+    config: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 export default DynamicForm;

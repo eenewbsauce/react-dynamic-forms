@@ -3,7 +3,7 @@ import './App.css';
 import DynamicForm from './dynamic-form';
 
 class App extends Component {
-  constructor(props) {
+    constructor(props) {
       super(props);
       let config = [
           {
@@ -102,7 +102,8 @@ class App extends Component {
                                                       className: 'question-wizard__submit-btn',
                                                       type: 'button',
                                                       props: {
-                                                          text: 'next'
+                                                          text: 'next',
+                                                          fn: 'next'
                                                       }
                                                   }
                                               ]
@@ -165,31 +166,40 @@ class App extends Component {
                                     label: 'Yes',
                                     name: 'moreIncome'
                                 }
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        className: 'question-wizard__btn-wrapper',
+                        type: 'div',
+                        children: [
                             {
-                                className: 'question-wizard__btn-wrapper',
+                                className: 'col-md-6',
                                 type: 'div',
                                 children: [
                                     {
-                                        className: 'col-md-12',
-                                        type: 'div',
-                                        children: [
-                                            {
-                                                className: 'question-wizard__back-btn',
-                                                type: 'button',
-                                                props: {
-                                                    text: 'back'
-                                                }
-                                            },
-                                            {
-                                                className: 'question-wizard__submit-btn',
-                                                type: 'button',
-                                                props: {
-                                                    text: 'submit'
-                                                }
-                                            }
-                                        ]
-                                    }
+                                        className: 'question-wizard__back-btn',
+                                        type: 'button',
+                                        props: {
+                                            text: 'back',
+                                            fn: 'previous'
+                                        }
+                                    },
+
+                                ]
+                            },
+                            {
+                                className: 'col-md-6',
+                                type: 'div',
+                                children: [
+                                    {
+                                        className: 'question-wizard__submit-btn',
+                                        type: 'submit',
+                                        props: {
+                                            text: 'submit'
+                                        }
+                                    },
+
                                 ]
                             }
                         ]
@@ -198,20 +208,27 @@ class App extends Component {
           }
       ];
 
-      let activeIndex = 1;
+      let activeIndex = 0;
 
       this.state = {
           activeIndex,
           config
       };
-  }
+    }
 
-  next(e) {
+    next(e) {
       e.preventDefault();
       this.setState({
           activeIndex: this.state.activeIndex+1
       });
-  }
+    }
+
+    previous(e) {
+        e.preventDefault();
+        this.setState({
+            activeIndex: this.state.activeIndex-1
+        });
+    }
 
   render() {
     return (
@@ -220,7 +237,11 @@ class App extends Component {
           <h1 className="App-title">Welcome to Development Heaven</h1>
         </header>
 
-        <DynamicForm config={ this.state.config[this.state.activeIndex] } next={(e) => this.next(e)} />
+        <DynamicForm
+            config={ this.state.config[this.state.activeIndex] }
+            next={(e) => this.next(e)}
+            previous={(e) => this.previous(e)}
+        />
       </div>
     );
   }

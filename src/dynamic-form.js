@@ -11,7 +11,7 @@ class DynamicForm extends PureComponent {
         this.getButton = this.getButton.bind(this);
     }
 
-    digestConfig(config = this.props.config, isRecursive = false, latestNode, nodeBeforeRecursion) {
+    digestConfig(latestNode, config = this.props.config, isRecursive = false, nodeBeforeRecursion = false) {
         if (!isRecursive) {
             this.tree = new ReactTree(
                 this.createElement(config.type),
@@ -38,7 +38,7 @@ class DynamicForm extends PureComponent {
                     nodeBeforeRecursion = false;
                 }
 
-                latestNode = this.digestConfig(childConfig, true, latestNode, nodeBeforeRecursion);
+                latestNode = this.digestConfig(latestNode, childConfig, true, nodeBeforeRecursion);
             });
         } else {
             latestNode = nodeBeforeRecursion;
@@ -143,7 +143,7 @@ class DynamicForm extends PureComponent {
             return <button
                 key={ props.id }
                 className={ props.className }
-                onClick={ self.props.next }
+                onClick={ self.props[props.fn] }
             >
                 { props.text }
             </button>
@@ -167,7 +167,8 @@ class DynamicForm extends PureComponent {
 
 DynamicForm.propTypes = {
     config: PropTypes.object.isRequired,
-    next: PropTypes.func.isRequired
+    next: PropTypes.func.isRequired,
+    previous: PropTypes.func.isRequired
 };
 
 export default DynamicForm;

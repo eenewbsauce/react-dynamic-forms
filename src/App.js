@@ -5,7 +5,7 @@ import DynamicForm from './dynamic-form';
 class App extends Component {
   constructor(props) {
       super(props);
-      this.config = [
+      let config = [
           {
               className: 'question-wizard__form-wrapper',
               type: 'div',
@@ -114,13 +114,103 @@ class App extends Component {
                       ]
                   }
               ]
+          },
+          {
+                className: 'question-wizard__form-wrapper',
+                type: 'div',
+                children: [
+                    {
+                        className: 'col-md-12',
+                        type: 'div',
+                        children: [
+                            {
+                                className: 'row',
+                                type: 'div',
+                                children: [
+                                    {
+                                        className: 'col-md-12',
+                                        type: 'div',
+                                        children: [
+                                            {
+                                                type: 'p',
+                                                props: {
+                                                    text: 'Do you have any more income?'
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        className: 'question-wizard__form',
+                        type: 'form',
+                        props: {
+                            name: 'moreIncome'
+                        },
+                        children: [
+                            {
+                                type: 'radio',
+                                props: {
+                                    value: false,
+                                    label: 'No',
+                                    name: 'moreIncome'
+                                }
+                            },
+                            {
+                                type: 'radio',
+                                props: {
+                                    value: true,
+                                    label: 'Yes',
+                                    name: 'moreIncome'
+                                }
+                            },
+                            {
+                                className: 'question-wizard__btn-wrapper',
+                                type: 'div',
+                                children: [
+                                    {
+                                        className: 'col-md-12',
+                                        type: 'div',
+                                        children: [
+                                            {
+                                                className: 'question-wizard__back-btn',
+                                                type: 'button',
+                                                props: {
+                                                    text: 'back'
+                                                }
+                                            },
+                                            {
+                                                className: 'question-wizard__submit-btn',
+                                                type: 'button',
+                                                props: {
+                                                    text: 'submit'
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
           }
       ];
+
+      let activeIndex = 1;
+
+      this.state = {
+          activeIndex,
+          config
+      };
   }
 
-  click(e) {
-      e.stopPropagation();
-      alert('foo');
+  next(e) {
+      e.preventDefault();
+      this.setState({
+          activeIndex: this.state.activeIndex+1
+      });
   }
 
   render() {
@@ -130,7 +220,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Development Heaven</h1>
         </header>
 
-        <DynamicForm config={ this.config[0] } onClick={(e) => this.click(e)} />
+        <DynamicForm config={ this.state.config[this.state.activeIndex] } next={(e) => this.next(e)} />
       </div>
     );
   }

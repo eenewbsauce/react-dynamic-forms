@@ -67,6 +67,7 @@ class DynamicForm extends PureComponent {
             case 'radio':
                 output = this.getRadio();
                 break;
+            case 'submit':
             case 'button':
                 output = this.getButton();
                 break;
@@ -89,7 +90,7 @@ class DynamicForm extends PureComponent {
         return function Div(props) {
             return <div key={ props.id } className={ props.className }>
                 {props.children.map((i) => {
-                    return React.createElement(i.element, { ...i.props, key: i.props.id } );
+                    return React.createElement(i.element, { ...i.props, key: i.props.id });
                 })}
             </div>;
         };
@@ -103,9 +104,9 @@ class DynamicForm extends PureComponent {
 
     getForm() {
         return function(props) {
-            return <form key={ props.id } name={props.name}>
+            return <form key={ props.id } name={ props.name }>
                 {props.children.map((i) => {
-                    return React.createElement(i.element, { ...i.props, key: i.props.id } );
+                    return React.createElement(i.element, { ...i.props, key: i.props.id });
                 })}
             </form>
         };
@@ -113,12 +114,10 @@ class DynamicForm extends PureComponent {
 
     getRadio() {
         return function Radio(props) {
-            return <div class="radio">
-                <label>
-                    <input type="radio" value={ props.value } />
-                    { props.placeholder }
+                return <label>
+                    <input type="radio" name={props.name} value={ props.value } />
+                    { props.label }
                 </label>
-            </div>
         }
     }
 
@@ -141,7 +140,13 @@ class DynamicForm extends PureComponent {
         let self = this;
 
         return function Button(props) {
-            return <button key={ props.id } className={ props.className } onClick={ self.props.onClick }>{ props.text }</button>
+            return <button
+                key={ props.id }
+                className={ props.className }
+                onClick={ self.props.next }
+            >
+                { props.text }
+            </button>
         };
     }
 
@@ -162,7 +167,7 @@ class DynamicForm extends PureComponent {
 
 DynamicForm.propTypes = {
     config: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
+    next: PropTypes.func.isRequired
 };
 
 export default DynamicForm;

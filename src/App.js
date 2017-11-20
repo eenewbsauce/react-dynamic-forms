@@ -49,9 +49,10 @@ class App extends Component {
                                       className: 'question-wizard__months',
                                       type: 'select',
                                       props: {
-                                          require: true,
+                                          required: true,
                                           options: [1, 2, 3, 4],
-                                          placeholder: 'month'
+                                          placeholder: 'month',
+                                          name: 'month'
                                       }
                                   }
                               ]
@@ -64,9 +65,10 @@ class App extends Component {
                                       className: 'question-wizard__days',
                                       type: 'select',
                                       props: {
-                                          require: true,
+                                          required: true,
                                           options: [1, 2, 3, 4, 5, 6],
-                                          placeholder: 'day'
+                                          placeholder: 'day',
+                                          name: 'day'
                                       }
                                   }
                               ]
@@ -79,9 +81,10 @@ class App extends Component {
                                       className: 'question-wizard__years',
                                       type: 'select',
                                       props: {
-                                          require: true,
+                                          required: true,
                                           options: [2001, 2002, 2003],
-                                          placeholder: 'year'
+                                          placeholder: 'year',
+                                          name: 'year'
                                       }
                                   }
                               ]

@@ -9,6 +9,24 @@ class DynamicForm extends PureComponent {
         super(props);
 
         this.getButton = this.getButton.bind(this);
+
+        this.state = {
+            valid: false,
+            values: {}
+        };
+    }
+
+    handleChange(e) {
+        this.setState({
+            valid: document.querySelector(`.${this.getFormName()}`).checkValidity(),
+            values: Object.assign({}, this.state.values, {
+                [e.target.name]: e.target.value
+            })
+        });
+    }
+
+    getFormName() {
+        return R.find(R.propEq('type', 'form'))(this.props.config.children).className;
     }
 
     digestConfig(latestNode, config = this.props.config, isRecursive = false, nodeBeforeRecursion = false) {
@@ -104,7 +122,7 @@ class DynamicForm extends PureComponent {
 
     getForm() {
         return function(props) {
-            return <form key={ props.id } name={ props.name }>
+            return <form key={ props.id } name={ props.name } className={ props.className }>
                 {props.children.map((i) => {
                     return React.createElement(i.element, { ...i.props, key: i.props.id });
                 })}
@@ -115,20 +133,29 @@ class DynamicForm extends PureComponent {
     getRadio() {
         return function Radio(props) {
                 return <label>
-                    <input type="radio" name={props.name} value={ props.value } />
+                    <input type="radio" name={props.name} value={ props.value } required={ props.required } />
                     { props.label }
                 </label>
         }
     }
 
     getSelect() {
+        let self = this;
+
         return function Select(props) {
             return (
-                <select key={ props.id } className={ props.className }>
+                <select
+                    key={ props.id }
+                    className={ props.className }
+                    required={ props.required }
+                    onChange={(e) => self.handleChange(e)}
+                    name={props.name}
+                    value={self.state.values[props.name]}
+                >
                     <option key={ 0 } value="">{ props.placeholder }</option>
                     {
-                        props.options.map((option) => {
-                            return <option key={ option+1 } value={ option }>{ option }</option>
+                        props.options.map((option, i) => {
+                            return <option key={ i+1 } value={ option }>{ option }</option>
                         })
                     }
                 </select>
@@ -144,6 +171,7 @@ class DynamicForm extends PureComponent {
                 key={ props.id }
                 className={ props.className }
                 onClick={ self.props[props.fn] }
+                disabled={!self.state.valid}
             >
                 { props.text }
             </button>

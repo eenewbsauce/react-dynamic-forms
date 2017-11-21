@@ -201,9 +201,15 @@ class DynamicForm extends PureComponent {
     }
 
     getTextarea() {
+        let self = this;
+
         return function Textarea(props) {
             return <textarea
                 placeholder={props.placeholder}
+                required={props.required}
+                onChange={(e) => self.handleChange(e)}
+                value={self.state.values[props.name]}
+                name={props.name}
             >
             </textarea>
         };

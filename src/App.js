@@ -251,7 +251,8 @@ class App extends Component {
                                 type: 'textarea',
                                 props: {
                                     placeholder: 'Please answer here',
-                                    required: true
+                                    required: true,
+                                    name: 'custom1'
                                 }
                             }
                         ]

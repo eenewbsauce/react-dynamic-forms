@@ -17,8 +17,10 @@ class DynamicForm extends PureComponent {
     }
 
     handleChange(e) {
+        // let form = document.querySelector(`.${this.getFormName()}`);
+
         this.setState({
-            valid: document.querySelector(`.${this.getFormName()}`).checkValidity(),
+            // valid: !R.isNil(form) ? form.checkValidity() : false,
             values: Object.assign({}, this.state.values, {
                 [e.target.name]: e.target.value
             })
@@ -102,6 +104,14 @@ class DynamicForm extends PureComponent {
         this.elem = elem;
         this.digestConfig();
         ReactDOM.render(this.renderedTree, this.elem);
+
+        setTimeout(() => {
+            let form = document.querySelector(`.${this.getFormName()}`);
+
+            this.setState({
+                valid: !R.isNil(form) ? form.checkValidity() : false
+            });
+        }, 0)
     }
 
     getDiv() {
@@ -131,9 +141,18 @@ class DynamicForm extends PureComponent {
     }
 
     getRadio() {
+        let self = this;
+
         return function Radio(props) {
                 return <label>
-                    <input type="radio" name={props.name} value={ props.value } required={ props.required } />
+                    <input
+                        type="radio"
+                        name={props.name}
+                        value={ props.value }
+                        checked={ self.state.values[props.name] === props.value}
+                        required={ props.required }
+                        onChange={(e) => self.handleChange(e)}
+                    />
                     { props.label }
                 </label>
         }
@@ -171,7 +190,7 @@ class DynamicForm extends PureComponent {
                 key={ props.id }
                 className={ props.className }
                 onClick={ self.props[props.fn] }
-                disabled={!self.state.valid}
+                disabled={props.requiresValidation && !self.state.valid}
             >
                 { props.text }
             </button>

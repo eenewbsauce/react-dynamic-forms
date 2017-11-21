@@ -91,6 +91,9 @@ class DynamicForm extends PureComponent {
             case 'button':
                 output = this.getButton();
                 break;
+            case 'textarea':
+                output = this.getTextarea();
+                break;
             case 'div':
             default:
                 output = this.getDiv();
@@ -194,6 +197,15 @@ class DynamicForm extends PureComponent {
             >
                 { props.text }
             </button>
+        };
+    }
+
+    getTextarea() {
+        return function Textarea(props) {
+            return <textarea
+                placeholder={props.placeholder}
+            >
+            </textarea>
         };
     }
 

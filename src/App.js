@@ -5,171 +5,252 @@ import DynamicForm from './dynamic-form';
 class App extends Component {
     constructor(props) {
         super(props);
+        // let config = [
+        //     {
+        //         className: 'question-wizard__form-wrapper',
+        //         type: 'div',
+        //         children: [
+        //             {
+        //                 className: 'col-md-12',
+        //                 type: 'div',
+        //                 children: [
+        //                     {
+        //                         className: 'row',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'col-md-12',
+        //                                 type: 'div',
+        //                                 children: [
+        //                                     {
+        //                                         type: 'p',
+        //                                         props: {
+        //                                             text: 'What was the start date?'
+        //                                         }
+        //                                     }
+        //                                 ]
+        //                             }
+        //                         ]
+        //                     }
+        //                 ]
+        //             },
+        //             {
+        //                 className: 'question-wizard__form',
+        //                 props: {
+        //                     name: 'aiq-form'
+        //                 },
+        //                 type: 'form',
+        //                 children: [
+        //                     {
+        //                         className: 'question-wizard__date-month-wrapper',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'question-wizard__months',
+        //                                 type: 'select',
+        //                                 props: {
+        //                                     required: true,
+        //                                     options: [1, 2, 3, 4],
+        //                                     placeholder: 'month',
+        //                                     name: 'month'
+        //                                 }
+        //                             }
+        //                         ]
+        //                     },
+        //                     {
+        //                         className: 'question-wizard__date-day-wrapper',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'question-wizard__days',
+        //                                 type: 'select',
+        //                                 props: {
+        //                                     required: true,
+        //                                     options: [1, 2, 3, 4, 5, 6],
+        //                                     placeholder: 'day',
+        //                                     name: 'day'
+        //                                 }
+        //                             }
+        //                         ]
+        //                     },
+        //                     {
+        //                         className: 'question-wizard__date-year-wrapper',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'question-wizard__years',
+        //                                 type: 'select',
+        //                                 props: {
+        //                                     required: true,
+        //                                     options: [2001, 2002, 2003],
+        //                                     placeholder: 'year',
+        //                                     name: 'year'
+        //                                 }
+        //                             }
+        //                         ]
+        //                     },
+        //                     {
+        //                         className: 'row',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'col-md-12',
+        //                                 type: 'div',
+        //                                 children: [
+        //                                     {
+        //                                         className: 'question-wizard__btn-wrapper',
+        //                                         type: 'div',
+        //                                         children: [
+        //                                             {
+        //                                                 className: 'question-wizard__submit-btn',
+        //                                                 type: 'button',
+        //                                                 props: {
+        //                                                     text: 'next',
+        //                                                     fn: 'next',
+        //                                                     requiresValidation: true
+        //                                                 }
+        //                                             }
+        //                                         ]
+        //                                     }
+        //                                 ]
+        //                             }
+        //                         ]
+        //                     }
+        //                 ]
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         className: 'question-wizard__form-wrapper',
+        //         type: 'div',
+        //         children: [
+        //             {
+        //                 className: 'col-md-12',
+        //                 type: 'div',
+        //                 children: [
+        //                     {
+        //                         className: 'row',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'col-md-12',
+        //                                 type: 'div',
+        //                                 children: [
+        //                                     {
+        //                                         type: 'p',
+        //                                         props: {
+        //                                             text: 'Do you have any more income?'
+        //                                         }
+        //                                     }
+        //                                 ]
+        //                             }
+        //                         ]
+        //                     }
+        //                 ]
+        //             },
+        //             {
+        //                 className: 'question-wizard__form',
+        //                 type: 'form',
+        //                 props: {
+        //                     name: 'moreIncome'
+        //                 },
+        //                 children: [
+        //                     {
+        //                         type: 'radio',
+        //                         props: {
+        //                             value: 'no',
+        //                             label: 'No',
+        //                             name: 'moreIncome',
+        //                             required: true
+        //                         }
+        //                     },
+        //                     {
+        //                         type: 'radio',
+        //                         props: {
+        //                             value: 'yes',
+        //                             label: 'Yes',
+        //                             name: 'moreIncome',
+        //                             required: true
+        //                         }
+        //                     }
+        //                 ]
+        //             },
+        //             {
+        //                 className: 'question-wizard__btn-wrapper',
+        //                 type: 'div',
+        //                 children: [
+        //                     {
+        //                         className: 'col-md-6',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'question-wizard__back-btn',
+        //                                 type: 'button',
+        //                                 props: {
+        //                                     text: 'back',
+        //                                     fn: 'previous',
+        //                                     requiresValidation: false
+        //                                 }
+        //                             },
+        //
+        //                         ]
+        //                     },
+        //                     {
+        //                         className: 'col-md-6',
+        //                         type: 'div',
+        //                         children: [
+        //                             {
+        //                                 className: 'question-wizard__submit-btn',
+        //                                 type: 'submit',
+        //                                 props: {
+        //                                     text: 'submit',
+        //                                     requiresValidation: true
+        //                                 }
+        //                             },
+        //
+        //                         ]
+        //                     }
+        //                 ]
+        //             }
+        //         ]
+        //     }
+        // ];
+
         let config = [
             {
                 className: 'question-wizard__form-wrapper',
                 type: 'div',
                 children: [
                     {
-                        className: 'col-md-12',
+                        className: 'row',
                         type: 'div',
                         children: [
                             {
-                                className: 'row',
+                                className: 'col-md-12',
                                 type: 'div',
                                 children: [
                                     {
-                                        className: 'col-md-12',
-                                        type: 'div',
-                                        children: [
-                                            {
-                                                type: 'p',
-                                                props: {
-                                                    text: 'What was the start date?'
-                                                }
-                                            }
-                                        ]
+                                        type: 'p',
+                                        props: {
+                                            text: 'What color are you eyes?'
+                                        }
                                     }
                                 ]
                             }
                         ]
                     },
                     {
-                        className: 'question-wizard__form',
-                        props: {
-                            name: 'aiq-form'
-                        },
-                        type: 'form',
-                        children: [
-                            {
-                                className: 'question-wizard__date-month-wrapper',
-                                type: 'div',
-                                children: [
-                                    {
-                                        className: 'question-wizard__months',
-                                        type: 'select',
-                                        props: {
-                                            required: true,
-                                            options: [1, 2, 3, 4],
-                                            placeholder: 'month',
-                                            name: 'month'
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                className: 'question-wizard__date-day-wrapper',
-                                type: 'div',
-                                children: [
-                                    {
-                                        className: 'question-wizard__days',
-                                        type: 'select',
-                                        props: {
-                                            required: true,
-                                            options: [1, 2, 3, 4, 5, 6],
-                                            placeholder: 'day',
-                                            name: 'day'
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                className: 'question-wizard__date-year-wrapper',
-                                type: 'div',
-                                children: [
-                                    {
-                                        className: 'question-wizard__years',
-                                        type: 'select',
-                                        props: {
-                                            required: true,
-                                            options: [2001, 2002, 2003],
-                                            placeholder: 'year',
-                                            name: 'year'
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                className: 'row',
-                                type: 'div',
-                                children: [
-                                    {
-                                        className: 'col-md-12',
-                                        type: 'div',
-                                        children: [
-                                            {
-                                                className: 'question-wizard__btn-wrapper',
-                                                type: 'div',
-                                                children: [
-                                                    {
-                                                        className: 'question-wizard__submit-btn',
-                                                        type: 'button',
-                                                        props: {
-                                                            text: 'next',
-                                                            fn: 'next',
-                                                            requiresValidation: true
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                className: 'question-wizard__form-wrapper',
-                type: 'div',
-                children: [
-                    {
-                        className: 'col-md-12',
-                        type: 'div',
-                        children: [
-                            {
-                                className: 'row',
-                                type: 'div',
-                                children: [
-                                    {
-                                        className: 'col-md-12',
-                                        type: 'div',
-                                        children: [
-                                            {
-                                                type: 'p',
-                                                props: {
-                                                    text: 'Do you have any more income?'
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        className: 'question-wizard__form',
+                        className: 'question-wizard__custom-wrapper',
                         type: 'form',
                         props: {
-                            name: 'moreIncome'
+                            name: 'form'
                         },
                         children: [
                             {
-                                type: 'radio',
+                                className: 'question-wizard__custom',
+                                type: 'textarea',
                                 props: {
-                                    value: 'no',
-                                    label: 'No',
-                                    name: 'moreIncome',
-                                    required: true
-                                }
-                            },
-                            {
-                                type: 'radio',
-                                props: {
-                                    value: 'yes',
-                                    label: 'Yes',
-                                    name: 'moreIncome',
+                                    placeholder: 'Please answer here',
                                     required: true
                                 }
                             }
@@ -180,35 +261,12 @@ class App extends Component {
                         type: 'div',
                         children: [
                             {
-                                className: 'col-md-6',
-                                type: 'div',
-                                children: [
-                                    {
-                                        className: 'question-wizard__back-btn',
-                                        type: 'button',
-                                        props: {
-                                            text: 'back',
-                                            fn: 'previous',
-                                            requiresValidation: false
-                                        }
-                                    },
-
-                                ]
-                            },
-                            {
-                                className: 'col-md-6',
-                                type: 'div',
-                                children: [
-                                    {
-                                        className: 'question-wizard__submit-btn',
-                                        type: 'submit',
-                                        props: {
-                                            text: 'submit',
-                                            requiresValidation: true
-                                        }
-                                    },
-
-                                ]
+                                className: 'question-wizard__submit-btn',
+                                type: 'button',
+                                props: {
+                                    text: 'Submit',
+                                    requiresValidation: true
+                                }
                             }
                         ]
                     }
